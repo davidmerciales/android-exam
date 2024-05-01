@@ -1,4 +1,4 @@
-package com.example.johndavidmerciales_android_exam.ui.theme
+package com.example.johndavidmerciales_android_exam.presentation.ui.theme
 
 import androidx.compose.ui.graphics.Color
 

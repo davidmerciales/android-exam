@@ -1,4 +1,4 @@
-package com.example.johndavidmerciales_android_exam.ui.theme
+package com.example.johndavidmerciales_android_exam.presentation.ui.theme
 
 import android.app.Activity
 import android.os.Build
