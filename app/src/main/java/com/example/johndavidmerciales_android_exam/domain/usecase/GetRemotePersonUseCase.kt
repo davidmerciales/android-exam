@@ -8,8 +8,8 @@ import com.example.johndavidmerciales_android_exam.domain.utils.Failure
 import com.example.johndavidmerciales_android_exam.domain.utils.Success
 import javax.inject.Inject
 
-class GetPersonUseCase @Inject constructor(
-    private val personRepository: PersonRepository
+class GetRemotePersonUseCase @Inject constructor(
+    private val personRepository: PersonRepository,
 ): UseCase<Results, GetPersonUseCaseRequest>()  {
     override suspend fun run(params: GetPersonUseCaseRequest): Either<Exception, Results> {
         return try {

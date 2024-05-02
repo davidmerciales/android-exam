@@ -145,6 +145,8 @@ object BaseItemSerializer : JsonContentPolymorphicSerializer<BaseLocation>(BaseL
         return when (val type = element.jsonObject["country"]?.jsonPrimitive?.toString()) {
             "Canada"    -> LocationString.serializer()
             "Australia"    -> LocationString.serializer()
+            "Netherlands"    -> LocationString.serializer()
+            "United Kingdom"    -> LocationString.serializer()
             else -> LocationInt.serializer()
         }
     }

@@ -16,7 +16,7 @@ class ApiServiceImpl @Inject constructor(
     private val httpClient: HttpClient
 ): ApiService {
     override suspend fun getPersonList(params: GetPersonUseCaseRequest): Results {
-        val response = httpClient.get("https://randomuser.me/api/?"){
+        val response = httpClient.get("https://randomuser.me/api/?nat=US&"){
             parameter("page", params.page)
             parameter("results", params.results)
             parameter("seed", params.seed)
