@@ -21,4 +21,8 @@ class PersonEntityRepositoryImpl(private val personDao: PersonDao) : PersonEntit
         return personDao.getAllPersons()
     }
 
+    override suspend fun deleteAllPersons() {
+        personDao.clearAll()
+    }
+
 }

@@ -19,6 +19,7 @@ serialization-json = "1.6.0"
 paging-runtime = "3.2.1"
 paging-compose = "1.0.0-alpha18"
 multidex = "1.0.3"
+swipe-refresh = "1.1.1"
 
 [libraries]
 core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "core-ktx" }
@@ -54,6 +55,7 @@ ktor-client-auth = { group = "io.ktor", name = "ktor-client-auth", version.ref =
 ktor-client-sse = { group = "io.ktor", name = "ktor-client-okhttp", version.ref = "ktor" }
 ktor-client-core = { group = "io.ktor", name = "ktor-client-core", version.ref = "ktor" }
 multidex = { group = "com.android.support", name = "multidex", version.ref = "multidex" }
+swipe-refresh = { group = "eu.bambooapps", name = "compose-material3-pullrefresh", version.ref = "swipe-refresh" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }

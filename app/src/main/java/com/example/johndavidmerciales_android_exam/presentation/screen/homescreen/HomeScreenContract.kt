@@ -12,7 +12,7 @@ class HomeScreenContract {
 
     sealed interface HomeEvent {
         data object OnLoadMore : HomeEvent
-        data class OnSwipeRefresh(var isSwipeRefresh: Boolean) : HomeEvent
+        data object OnSwipeRefresh : HomeEvent
         data class OnPersonItemClicked(val id: String): HomeEvent
 
     }
@@ -23,6 +23,7 @@ class HomeScreenContract {
         var seed: String
         var results: Int
         var isLoading: Boolean
+        var isRefreshing: Boolean
     }
 
     class MutableHomeState: HomeState {
@@ -31,5 +32,6 @@ class HomeScreenContract {
         override var seed: String by mutableStateOf("abc")
         override var results: Int by mutableIntStateOf(15)
         override var isLoading: Boolean by mutableStateOf(false)
+        override var isRefreshing: Boolean by mutableStateOf(false)
     }
 }

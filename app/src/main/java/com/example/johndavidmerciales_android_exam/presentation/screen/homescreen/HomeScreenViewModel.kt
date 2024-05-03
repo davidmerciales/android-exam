@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.johndavidmerciales_android_exam.data.model.PersonEntity
 import com.example.johndavidmerciales_android_exam.domain.model.request.GetPersonUseCaseRequest
+import com.example.johndavidmerciales_android_exam.domain.usecase.DeleteAllPersonsUseCase
 import com.example.johndavidmerciales_android_exam.domain.usecase.GetLocalPersonsUseCase
 import com.example.johndavidmerciales_android_exam.domain.usecase.GetRemotePersonUseCase
 import com.example.johndavidmerciales_android_exam.domain.usecase.InsertPersonUseCase
@@ -12,17 +13,20 @@ import com.example.johndavidmerciales_android_exam.presentation.navigation.AppCo
 import com.example.johndavidmerciales_android_exam.presentation.utils.NavEvent
 import com.example.johndavidmerciales_android_exam.presentation.utils.Routes
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import kotlin.math.log
 
 @HiltViewModel
 class HomeScreenViewModel @Inject constructor(
     private val getPersonRemoteUseCase: GetRemotePersonUseCase,
     private val insertPersonUseCase: InsertPersonUseCase,
     private val getLocalPersonsUseCase: GetLocalPersonsUseCase,
+    private val deleteAllpersonsUseCase: DeleteAllPersonsUseCase,
     appController: AppController
 ) : ViewModel() {
 
@@ -43,8 +47,9 @@ class HomeScreenViewModel @Inject constructor(
                         getInitialLocalPersonList()
                     }
 
-                    is HomeScreenContract.HomeEvent.OnSwipeRefresh -> {
-
+                    HomeScreenContract.HomeEvent.OnSwipeRefresh -> {
+                        Log.d("refreshList: ", "afasf")
+                        refreshList()
                     }
 
                     is HomeScreenContract.HomeEvent.OnPersonItemClicked-> {
@@ -55,9 +60,26 @@ class HomeScreenViewModel @Inject constructor(
         }
     }
 
+    private fun refreshList() {
+        state.isRefreshing = true
+        viewModelScope.launch {
+            deleteAllpersonsUseCase
+            state.persons = emptyList()
+            state.page = 0
+            Log.d("refreshList: ", state.persons.size.toString())
+        }
+        viewModelScope.launch {
+            delay(500)
+            getRemotePersonList(false)
+            getInitialLocalPersonList()
+        }
+    }
+
     private fun getInitialLocalPersonList() = viewModelScope.launch{
        getLocalPersonsUseCase().collect{ personsRaw->
            state.persons = personsRaw
+
+           if (state.isRefreshing) state.isRefreshing = false
        }
     }
 

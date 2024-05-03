@@ -10,4 +10,6 @@ interface PersonEntityRepository {
     suspend fun insertPersons(person: List<PersonEntity>)
 
     suspend fun getPersons(): Flow<List<PersonEntity>>
+
+    suspend fun deleteAllPersons()
 }
