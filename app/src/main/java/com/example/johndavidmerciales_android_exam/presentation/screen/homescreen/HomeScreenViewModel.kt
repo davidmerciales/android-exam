@@ -62,6 +62,9 @@ class HomeScreenViewModel @Inject constructor(
     }
 
     private fun getRemotePersonList(isLoadMore: Boolean) = viewModelScope.launch {
+        if (isLoadMore){
+            state.isLoading = true
+        }
         getPersonRemoteUseCase(
             params = GetPersonUseCaseRequest(
                 page = if (isLoadMore) (state.page + 1).toString() else state.page.toString(),
@@ -71,6 +74,8 @@ class HomeScreenViewModel @Inject constructor(
             onSuccess = { results ->
                 insertPersonUseCase(
                     results.results.map { person ->
+                        state.page = results.info.page
+
                         PersonEntity(
                             id = person.login.uuid,
                             title = person.name.title,
@@ -85,9 +90,10 @@ class HomeScreenViewModel @Inject constructor(
                         )
                     }
                 )
+                state.isLoading = false
             },
             onFailure = {
-
+                state.isLoading = false
             }
         )
     }

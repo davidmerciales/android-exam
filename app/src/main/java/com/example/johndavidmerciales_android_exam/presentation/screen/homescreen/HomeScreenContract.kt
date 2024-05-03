@@ -22,6 +22,7 @@ class HomeScreenContract {
         var page: Int
         var seed: String
         var results: Int
+        var isLoading: Boolean
     }
 
     class MutableHomeState: HomeState {
@@ -29,5 +30,6 @@ class HomeScreenContract {
         override var page: Int by mutableIntStateOf(1)
         override var seed: String by mutableStateOf("abc")
         override var results: Int by mutableIntStateOf(15)
+        override var isLoading: Boolean by mutableStateOf(false)
     }
 }
