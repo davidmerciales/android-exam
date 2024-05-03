@@ -33,7 +33,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 @Preview
 @Composable
 fun DetailScreen(
-    viewModel: DetailScreenViewModel = hiltViewModel()
+    state: DetailScreenContract.DetailState,
+    onEvent: (DetailScreenContract.DetailEvent) -> Unit
 ) {
 
     Scaffold(
@@ -47,7 +48,7 @@ fun DetailScreen(
                 },
                 navigationIcon = {
                     IconButton(
-                        onClick = { viewModel.setEvent(DetailScreenContract.DetailEvent.OnPopBackClick)}) {
+                        onClick = { onEvent(DetailScreenContract.DetailEvent.OnPopBackClick)}) {
                         Icon(imageVector = Icons.Default.ArrowBack, contentDescription = "back")
                     }
                 }
@@ -55,7 +56,7 @@ fun DetailScreen(
         },
         content = { paddingValues ->
             Content(
-                viewModel.state,
+                state,
                 paddingValues)
         }
     )

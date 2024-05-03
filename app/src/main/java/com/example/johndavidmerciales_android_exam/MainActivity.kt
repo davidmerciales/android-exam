@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -13,7 +14,9 @@ import androidx.navigation.navArgument
 import com.example.johndavidmerciales_android_exam.presentation.navigation.AppController
 import com.example.johndavidmerciales_android_exam.presentation.navigation.CollectRoutes
 import com.example.johndavidmerciales_android_exam.presentation.screen.detailscreen.DetailScreen
+import com.example.johndavidmerciales_android_exam.presentation.screen.detailscreen.DetailScreenViewModel
 import com.example.johndavidmerciales_android_exam.presentation.screen.homescreen.HomeScreen
+import com.example.johndavidmerciales_android_exam.presentation.screen.homescreen.HomeScreenViewModel
 import com.example.johndavidmerciales_android_exam.presentation.ui.theme.JohnDavidMercialesandroidexamTheme
 import com.example.johndavidmerciales_android_exam.presentation.utils.Routes
 import dagger.hilt.android.AndroidEntryPoint
@@ -39,7 +42,11 @@ class MainActivity : ComponentActivity() {
                 ){
 
                     composable(Routes.HomeScreen){
-                        HomeScreen()
+                        val homeScreenViewModel: HomeScreenViewModel = hiltViewModel()
+                        HomeScreen(
+                            state = homeScreenViewModel.state,
+                            onEvent = homeScreenViewModel::setEvent
+                        )
                     }
 
                     composable(Routes.DetailScreen  + "?personId={personId}",
@@ -49,7 +56,11 @@ class MainActivity : ComponentActivity() {
                                 defaultValue = ""
                             }
                         )){
-                        DetailScreen()
+                        val detailScreenViewModel: DetailScreenViewModel = hiltViewModel()
+                        DetailScreen(
+                            state = detailScreenViewModel.state,
+                            onEvent = detailScreenViewModel::setEvent
+                        )
                     }
                 }
             }

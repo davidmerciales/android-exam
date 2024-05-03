@@ -30,13 +30,13 @@ private const val buffer = 1
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(
-    homeScreenViewModel: HomeScreenViewModel = hiltViewModel()
+    state: HomeScreenContract.HomeState,
+    onEvent: (HomeScreenContract.HomeEvent)-> Unit
 ){
 
     val listState = rememberLazyListState()
-    val refreshState = rememberPullRefreshState(refreshing = homeScreenViewModel.state.isRefreshing, onRefresh = {
-        Log.d("refreshList", "HomeScreen: ")
-        homeScreenViewModel.setEvent(HomeScreenContract.HomeEvent.OnSwipeRefresh) })
+    val refreshState = rememberPullRefreshState(refreshing = state.isRefreshing, onRefresh = {
+        onEvent(HomeScreenContract.HomeEvent.OnSwipeRefresh) })
 
     val reachedBottom: Boolean by remember {
         derivedStateOf {
@@ -47,7 +47,7 @@ fun HomeScreen(
 
     LaunchedEffect(reachedBottom) {
         if (reachedBottom) {
-            homeScreenViewModel.setEvent(HomeScreenContract.HomeEvent.OnLoadMore)}
+            onEvent(HomeScreenContract.HomeEvent.OnLoadMore)}
     }
     Box{
         LazyColumn(
@@ -58,24 +58,17 @@ fun HomeScreen(
             item {
                 Text(text = "Persons:")
             }
-            items(homeScreenViewModel.state.persons){ person->
-                Card(modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(5.dp)
-                    .clickable {
-                        homeScreenViewModel.setEvent(
-                            HomeScreenContract.HomeEvent.OnPersonItemClicked(
-                                person.id
-                            )
+            items(state.persons){ person->
+
+                PersonItem("${person.firstName} ${person.lastName}"){
+                    onEvent(
+                        HomeScreenContract.HomeEvent.OnPersonItemClicked(
+                            person.id
                         )
-                    }) {
-                    Text(
-                        modifier = Modifier
-                            .padding(15.dp),
-                        text = person.firstName)
+                    )
                 }
             }
-            if (homeScreenViewModel.state.isLoading) {
+            if (state.isLoading) {
                 item {
                     Box(
                         modifier = Modifier
@@ -92,7 +85,25 @@ fun HomeScreen(
 
         PullRefreshIndicator(
             modifier = Modifier.align(Alignment.TopCenter),
-            refreshing = homeScreenViewModel.state.isRefreshing,
+            refreshing = state.isRefreshing,
             state = refreshState)
+    }
+}
+
+@Composable
+fun PersonItem(
+    name: String,
+    onItemClick: () -> Unit
+) {
+    Card(modifier = Modifier
+        .fillMaxWidth()
+        .padding(5.dp)
+        .clickable {
+            onItemClick()
+        }) {
+        Text(
+            modifier = Modifier
+                .padding(15.dp),
+            text = name)
     }
 }
