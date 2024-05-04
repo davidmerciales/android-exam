@@ -81,6 +81,8 @@ dependencies {
     implementation(libs.paging.compose)
     implementation(libs.multidex)
     implementation(libs.swipe.refresh)
+    implementation(libs.glide)
+    implementation(libs.extended.icon)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.test.ext.junit)
     androidTestImplementation(libs.espresso.core)

@@ -12,6 +12,7 @@ import com.example.johndavidmerciales_android_exam.domain.usecase.InsertPersonUs
 import com.example.johndavidmerciales_android_exam.presentation.navigation.AppController
 import com.example.johndavidmerciales_android_exam.presentation.utils.NavEvent
 import com.example.johndavidmerciales_android_exam.presentation.utils.Routes
+import com.example.johndavidmerciales_android_exam.presentation.utils.toDate
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -48,7 +49,6 @@ class HomeScreenViewModel @Inject constructor(
                     }
 
                     HomeScreenContract.HomeEvent.OnSwipeRefresh -> {
-                        Log.d("refreshList: ", "afasf")
                         refreshList()
                     }
 
@@ -104,11 +104,12 @@ class HomeScreenViewModel @Inject constructor(
                             firstName = person.name.first,
                             lastName = person.name.last,
                             gender = person.gender,
-                            birthday = person.dob.date,
+                            birthday = person.dob.date.toDate(),
                             age = person.dob.age,
                             emailAddress = person.email,
                             mobileNumber = person.cell,
-                            address = "${person.location.state}, ${person.location.city}"
+                            address = "${person.location.state}, ${person.location.city}",
+                            profileImg = person.picture.large
                         )
                     }
                 )
@@ -126,3 +127,4 @@ class HomeScreenViewModel @Inject constructor(
         viewModelScope.launch { _event.emit(newEvent) }
     }
 }
+

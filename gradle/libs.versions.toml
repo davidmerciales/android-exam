@@ -20,6 +20,8 @@ paging-runtime = "3.2.1"
 paging-compose = "1.0.0-alpha18"
 multidex = "1.0.3"
 swipe-refresh = "1.1.1"
+glide = "1.0.0-beta01"
+extended_icon_version = "1.5.0"
 
 [libraries]
 core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "core-ktx" }
@@ -56,6 +58,8 @@ ktor-client-sse = { group = "io.ktor", name = "ktor-client-okhttp", version.ref 
 ktor-client-core = { group = "io.ktor", name = "ktor-client-core", version.ref = "ktor" }
 multidex = { group = "com.android.support", name = "multidex", version.ref = "multidex" }
 swipe-refresh = { group = "eu.bambooapps", name = "compose-material3-pullrefresh", version.ref = "swipe-refresh" }
+glide = { group = "com.github.bumptech.glide", name = "compose", version.ref = "glide" }
+extended-icon = { group = "org.jetbrains.compose.material", name = "material-icons-extended", version.ref = "extended_icon_version"}
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }

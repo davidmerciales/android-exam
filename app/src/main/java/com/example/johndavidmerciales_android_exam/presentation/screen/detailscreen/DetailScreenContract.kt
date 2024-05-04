@@ -25,6 +25,7 @@ class DetailScreenContract {
         var emailAddress: String
         var mobileNumber: String
         var address: String
+        var profileImg: String
     }
 
     class MutableDetailState: DetailState {
@@ -38,5 +39,6 @@ class DetailScreenContract {
         override var emailAddress: String by mutableStateOf("")
         override var mobileNumber: String by mutableStateOf("")
         override var address: String by mutableStateOf("")
+        override var profileImg: String by mutableStateOf("")
     }
 }

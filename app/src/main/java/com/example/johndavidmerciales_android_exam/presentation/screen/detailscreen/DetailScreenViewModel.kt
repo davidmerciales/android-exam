@@ -45,6 +45,7 @@ class DetailScreenViewModel @Inject constructor(
                     state.emailAddress = person.emailAddress
                     state.mobileNumber = person.mobileNumber
                     state.address = person.address
+                    state.profileImg = person.profileImg
                 }
             }
         }

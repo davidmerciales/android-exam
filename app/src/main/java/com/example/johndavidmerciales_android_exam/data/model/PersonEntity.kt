@@ -16,4 +16,5 @@ data class PersonEntity(
     val emailAddress: String,
     val mobileNumber: String,
     val address: String,
+    val profileImg: String
 )
